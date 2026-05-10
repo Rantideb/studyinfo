@@ -1,0 +1,102 @@
+---
+const faqs = [
+  {
+    question: "Can average students really get scholarships?",
+    answer: "Yes! Many scholarships look for leadership, community involvement, or specific talents rather than just a 4.0 GPA. We focus on finding these 'holistic' opportunities."
+  },
+  {
+    question: "Do I need a high GPA to study in Europe?",
+    answer: "While top universities are competitive, many excellent public universities in countries like Germany, Italy, and Hungary accept students with moderate grades if they meet other requirements."
+  },
+  {
+    question: "Is IELTS mandatory for all universities?",
+    answer: "Not always. Some universities accept MOI (Medium of Instruction) certificates if your previous education was in English, though IELTS/TOEFL is still the safest bet for visa purposes."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+---
+
+<section class="faq-section">
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+  <div class="container">
+    <div class="header text-center">
+      <h2 class="title">Common Questions</h2>
+      <p class="subtitle">Quick answers for busy backbenchers.</p>
+    </div>
+
+    <div class="faq-grid">
+      {faqs.map(faq => (
+        <div class="faq-item">
+          <h3 class="faq-question">{faq.question}</h3>
+          <p class="faq-answer">{faq.answer}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding: 5rem 0;
+    background-color: #f8fafc;
+  }
+  .container {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .text-center { text-align: center; }
+  .header { margin-bottom: 3rem; }
+  .title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+  .subtitle {
+    font-size: 1.125rem;
+    color: #64748b;
+  }
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  @media (min-width: 768px) {
+    .faq-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .faq-item {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.2s;
+  }
+  .faq-item:hover {
+    transform: translateY(-5px);
+  }
+  .faq-question {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+  .faq-answer {
+    color: #475569;
+    line-height: 1.6;
+  }
+</style>

@@ -1,0 +1,308 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const data = post.data;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": data.title,
+  "description": data.excerpt,
+  "image": data.image,
+  "author": {
+    "@type": "Person",
+    "name": data.author
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Studyinfo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.studyinfo.net/logo.png"
+    }
+  },
+  "datePublished": data.date,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://www.studyinfo.net/blog/${post.id}`
+  }
+};
+---
+
+<Layout 
+  title={`${data.title} | Studyinfo`}
+  description={data.excerpt}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(articleSchema)} />
+  <div class="blog-post-page">
+    <div class="post-hero">
+      <div class="hero-image-bg">
+        <img src={data.image} alt={data.title} class="hero-image" />
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="hero-content-container">
+        <div class="container">
+          <a href="/blog" class="back-link">
+            <ArrowLeft class="back-icon" />
+            Back to Articles
+          </a>
+
+          <div class="post-meta-top">
+            <span class="category-badge">{data.category}</span>
+            <span class="meta-item">
+              <Calendar class="meta-icon" />
+              {data.date}
+            </span>
+            <span class="meta-item">
+              <Clock class="meta-icon" />
+              {data.readTime}
+            </span>
+          </div>
+
+          <h1 class="post-title">{data.title}</h1>
+
+          <div class="author-info">
+            <div class="author-avatar">
+              {data.author.charAt(0)}
+            </div>
+            <div class="author-details">
+              <p class="author-name">{data.author}</p>
+              <p class="author-label">Author</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="container py-16">
+      <article class="prose">
+        <Content />
+      </article>
+
+      <div class="tags-section">
+        <h3 class="tags-label">Related Topics</h3>
+        <div class="tags-list">
+          {data.tags.map(tag => (
+            <span class="tag-badge">#{tag}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="share-box">
+        <div class="share-info">
+          <h3 class="share-title">Found this helpful?</h3>
+          <p class="share-subtitle">Share it with your backbencher friends.</p>
+        </div>
+        <button id="share-button" class="share-btn">
+          <Share2 class="share-icon" />
+          Share Link
+        </button>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  const shareBtn = document.getElementById('share-button');
+  shareBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert('Link copied to clipboard!');
+  });
+</script>
+
+<style>
+  .blog-post-page {
+    background-color: #ffffff;
+  }
+  .container {
+    max-width: 56rem; /* max-w-4xl */
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .post-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    width: 100%;
+    color: #ffffff;
+  }
+  .hero-image-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #0f172a, rgba(15, 23, 42, 0.6), transparent);
+  }
+
+  .hero-content-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 3rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #cbd5e1;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: #ffffff; }
+  .back-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .post-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    color: #cbd5e1;
+  }
+  .category-badge {
+    background-color: #64748b;
+    color: #ffffff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 500;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .meta-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .post-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+  @media (min-width: 768px) {
+    .post-title { font-size: 3rem; }
+  }
+
+  .author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .author-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #64748b;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+  .author-name {
+    font-weight: 500;
+    margin: 0;
+  }
+  .author-label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  .tags-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .tags-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tag-badge {
+    padding: 0.5rem 1rem;
+    background-color: #f1f5f9;
+    color: #334155;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .share-box {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background-color: rgba(30, 64, 175, 0.05);
+    border: 1px solid rgba(30, 64, 175, 0.1);
+    border-radius: 0.75rem;
+  }
+  .share-title {
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+  }
+  .share-subtitle {
+    font-size: 0.875rem;
+    color: #475569;
+    margin: 0.25rem 0 0;
+  }
+  .share-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    color: #334155;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .share-btn:hover { background-color: #f8fafc; }
+  .share-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

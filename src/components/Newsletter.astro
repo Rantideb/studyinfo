@@ -1,0 +1,185 @@
+---
+import { Mail, CheckCircle } from "lucide-astro";
+---
+
+<section class="newsletter-section">
+  <div class="newsletter-container">
+    <div class="newsletter-card">
+      <div class="icon-header">
+        <div class="icon-circle">
+          <Mail class="mail-icon" />
+        </div>
+      </div>
+      
+      <h2 class="newsletter-title">Stay Updated with Latest Tips</h2>
+      <p class="newsletter-subtitle">
+        Get weekly study tips, scholarship alerts, and educational resources delivered to your inbox.
+      </p>
+      
+      <div id="newsletter-form-container">
+        <form id="newsletter-form" class="newsletter-form">
+          <div class="form-group">
+            <input
+              type="email"
+              id="newsletter-email"
+              placeholder="Enter your email address"
+              class="newsletter-input"
+              required
+            />
+            <button type="submit" class="newsletter-button">
+              Subscribe
+            </button>
+          </div>
+          <p class="privacy-note">
+            No spam, unsubscribe at any time.
+          </p>
+        </form>
+      </div>
+
+      <div id="newsletter-success" class="newsletter-success" style="display: none;">
+        <CheckCircle class="success-icon" />
+        <span class="success-message">Thank you for subscribing!</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement;
+  const formContainer = document.getElementById('newsletter-form-container');
+  const successContainer = document.getElementById('newsletter-success');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
+    
+    if (emailInput.value) {
+      // Simulate success
+      if (formContainer) formContainer.style.display = 'none';
+      if (successContainer) successContainer.style.display = 'flex';
+      
+      // You could add a toast here if you want to install a vanilla toast lib, 
+      // but keeping it minimal as requested.
+    }
+  });
+</script>
+
+<style>
+  .newsletter-section {
+    background-color: #2563eb; /* blue-600 */
+    padding: 4rem 0;
+  }
+  .newsletter-container {
+    max-width: 56rem; /* max-w-4xl */
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  @media (min-width: 640px) {
+    .newsletter-container { padding: 0 1.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .newsletter-container { padding: 0 2rem; }
+  }
+
+  .newsletter-card {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    text-align: center;
+  }
+
+  .icon-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .icon-circle {
+    background-color: #dbeafe; /* blue-100 */
+    padding: 0.75rem;
+    border-radius: 9999px;
+  }
+  .mail-icon {
+    width: 2rem;
+    height: 2rem;
+    color: #2563eb;
+  }
+
+  .newsletter-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+  .newsletter-subtitle {
+    font-size: 1.125rem;
+    color: #475569;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .newsletter-form {
+    max-width: 28rem;
+    margin: 0 auto;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .form-group {
+      flex-direction: row;
+    }
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    transition: ring 0.2s;
+  }
+  .newsletter-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+
+  .newsletter-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #2563eb;
+    color: #ffffff;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .newsletter-button:hover {
+    background-color: #1d4ed8;
+  }
+
+  .privacy-note {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 0.75rem;
+  }
+
+  .newsletter-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #16a34a; /* green-600 */
+  }
+  .success-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .success-message {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+</style>

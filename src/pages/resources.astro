@@ -1,0 +1,124 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BlogCard from "../components/BlogCard.astro";
+import { Library } from "lucide-astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog");
+const resourcesPosts = allPosts.filter(post => post.data.category === 'Resources' || post.data.category === 'Country Guides');
+---
+
+<Layout 
+  title="Resources & Country Guides | Studyinfo"
+  description="Comprehensive study abroad guides for UK, Canada, Germany, and more. Essential resources for international students."
+>
+  <main class="resources-page">
+    <section class="page-hero">
+      <div class="container text-center">
+        <div class="hero-icon-wrapper">
+          <div class="hero-icon-bg">
+            <Library class="hero-icon" />
+          </div>
+        </div>
+        <h1 class="hero-title">
+          Resources & <span class="text-accent">Country Guides</span>
+        </h1>
+        <p class="hero-subtitle">
+          Detailed guides for UK, Canada, Germany, and more. Plus tools to help you plan.
+        </p>
+      </div>
+    </section>
+
+    <section class="posts-section">
+      <div class="container">
+        <div class="posts-grid">
+          {resourcesPosts.map((post) => (
+            <BlogCard {...post.data} slug={post.id} id={post.id} />
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .resources-page {
+    background-color: #f8fafc;
+  }
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  @media (min-width: 640px) {
+    .container { padding: 0 1.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .container { padding: 0 2rem; }
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .page-hero {
+    background-color: #0f172a;
+    padding: 5rem 0;
+  }
+  .hero-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .hero-icon-bg {
+    background-color: #2563eb;
+    padding: 1rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.5);
+  }
+  .hero-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #ffffff;
+  }
+  .hero-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 3rem;
+    }
+  }
+  .text-accent {
+    color: #3b82f6;
+  }
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    max-width: 42rem;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .posts-section {
+    padding: 4rem 0;
+  }
+  .posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  @media (min-width: 768px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,282 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BlogCard from "../components/BlogCard.astro";
+import { Search, Filter } from "lucide-astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog");
+const categories = Array.from(new Set(allPosts.map(post => post.data.category)));
+---
+
+<Layout 
+  title="Blog | Studyinfo"
+  description="Explore our latest articles on study strategies, scholarship opportunities, and student life hacks."
+>
+  <main class="blog-index-page">
+    <div class="container py-12">
+      <div class="header text-center">
+        <h1 class="page-title">Study Abroad Guide for Backbenchers</h1>
+        <p class="page-subtitle">
+          No jargon. No judgment. Just practical advice for average students who want to achieve big dreams.
+        </p>
+        <a href="/" class="back-link">← Back to Home</a>
+      </div>
+
+      <div class="filters-bar">
+        <div class="search-wrapper">
+          <Search class="search-icon" />
+          <input
+            type="text"
+            id="blog-search"
+            placeholder="Search articles..."
+            class="search-input"
+          />
+        </div>
+
+        <div class="categories-wrapper">
+          <Filter class="filter-icon" />
+          <div class="categories-list">
+            <button class="category-btn active" data-category="all">All</button>
+            {categories.map(category => (
+              <button class="category-btn" data-category={category}>{category}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div id="no-results" class="no-results" style="display: none;">
+        <p>No articles found matching your search.</p>
+        <button id="clear-filters" class="clear-link">Clear filters</button>
+      </div>
+
+      <div id="posts-grid" class="posts-grid">
+        {allPosts.map(post => (
+          <div class="post-item" data-category={post.data.category} data-title={post.data.title.toLowerCase()} data-excerpt={post.data.excerpt.toLowerCase()}>
+            <BlogCard {...post.data} slug={post.id} id={post.id} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function initBlogFilters() {
+    const searchInput = document.getElementById('blog-search') as HTMLInputElement;
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const postItems = document.querySelectorAll('.post-item');
+    const noResults = document.getElementById('no-results');
+    const postsGrid = document.getElementById('posts-grid');
+    const clearBtn = document.getElementById('clear-filters');
+
+    let activeCategory = 'all';
+    let searchTerm = '';
+
+    function filterPosts() {
+      let visibleCount = 0;
+      
+      postItems.forEach(item => {
+        const el = item as HTMLElement;
+        const category = el.dataset.category;
+        const title = el.dataset.title || '';
+        const excerpt = el.dataset.excerpt || '';
+        
+        const matchesSearch = title.includes(searchTerm) || excerpt.includes(searchTerm);
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+        
+        if (matchesSearch && matchesCategory) {
+          el.style.display = 'block';
+          visibleCount++;
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      if (noResults && postsGrid) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        postsGrid.style.display = visibleCount === 0 ? 'none' : 'grid';
+      }
+    }
+
+    searchInput?.addEventListener('input', (e) => {
+      searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+      filterPosts();
+    });
+
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCategory = (btn as HTMLElement).dataset.category || 'all';
+        filterPosts();
+      });
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      if (searchInput) {
+        searchInput.value = '';
+        searchTerm = '';
+        activeCategory = 'all';
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-category="all"]')?.classList.add('active');
+        filterPosts();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initBlogFilters);
+</script>
+
+<style>
+  .blog-index-page {
+    background-color: #f8fafc;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+
+  .text-center { text-align: center; }
+
+  .header { margin-bottom: 3rem; }
+  .page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+  .page-subtitle {
+    font-size: 1.25rem;
+    color: #475569;
+    max-width: 42rem;
+    margin: 0 auto 1.5rem;
+  }
+  .back-link {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  .filters-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  @media (min-width: 768px) {
+    .filters-bar {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    .search-wrapper { max-width: 24rem; }
+  }
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #94a3b8;
+  }
+  .search-input {
+    width: 100%;
+    padding: 0.625rem 1rem 0.625rem 2.5rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .search-input:focus {
+    border-color: #64748b;
+    box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2);
+  }
+
+  .categories-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  @media (min-width: 768px) {
+    .categories-wrapper {
+      width: auto;
+      overflow-x: visible;
+      padding-bottom: 0;
+    }
+  }
+  .filter-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #94a3b8;
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .filter-icon { display: block; }
+  }
+  .categories-list {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .category-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .category-btn:hover { background-color: #f1f5f9; }
+  .category-btn.active {
+    background-color: #64748b;
+    color: #ffffff;
+    border-color: #64748b;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  @media (min-width: 768px) {
+    .posts-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .posts-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem 0;
+  }
+  .no-results p {
+    font-size: 1.25rem;
+    color: #475569;
+  }
+  .clear-link {
+    background: none;
+    border: none;
+    color: #64748b;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+</style>

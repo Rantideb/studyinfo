@@ -1,0 +1,142 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Studyinfo | Study Abroad Guidance for Average Students",
+  description = "No judgment, just results. We help backbenchers and average students find the best study abroad scholarships and opportunities."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, "https://www.studyinfo.net").href} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://www.studyinfo.net/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://www.studyinfo.net/og-image.jpg" />
+
+    <!-- Structured Data (Organization) -->
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Studyinfo",
+        "url": "https://www.studyinfo.net",
+        "logo": "https://www.studyinfo.net/logo.png",
+        "description": "Helping backbenchers and average students find the best study abroad scholarships and opportunities.",
+        "sameAs": [
+          "https://twitter.com/studyinfo",
+          "https://facebook.com/studyinfo"
+        ]
+      }
+    </script>
+    
+    <!-- View Transitions for SPA-like feel -->
+    <ClientRouter />
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="layout-wrapper">
+      <Header />
+      <main class="main-content">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    /* Brand Colors */
+    --brand-primary: #1e40af; /* blue-800 */
+    --brand-secondary: #64748b; /* slate-500 */
+    --brand-accent: #2563eb; /* blue-600 */
+    --brand-dark: #0f172a; /* slate-900 */
+    
+    /* Background & Text */
+    --bg-color: #f8fafc; /* slate-50 */
+    --text-body: #334155; /* slate-700 */
+    --text-heading: #0f172a; /* slate-900 */
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-heading);
+    margin-top: 0;
+  }
+
+  .layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    flex: 1;
+  }
+
+  /* Prose / Typography Styles */
+  .prose {
+    line-height: 1.6;
+    color: #475569;
+  }
+  .prose h1, .prose h2, .prose h3 {
+    color: #0f172a;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .prose h1 { font-size: 2.25rem; }
+  .prose h2 { font-size: 1.5rem; }
+  .prose p { margin-bottom: 1.25rem; }
+  .prose ul { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+  .prose li { margin-bottom: 0.5rem; }
+  .prose a { color: #2563eb; text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+</style>

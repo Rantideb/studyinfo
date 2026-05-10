@@ -1,0 +1,228 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { BookOpen, Users, Globe, Award, Target, Heart } from "lucide-astro";
+---
+
+<Layout 
+  title="About Us | Studyinfo"
+  description="Learn more about Study & Scholarship Blog Resources. Our mission is to empower students worldwide with accessible educational information."
+>
+  <div class="about-page">
+    <section class="about-hero">
+      <div class="container">
+        <div class="hero-icon-wrapper">
+          <div class="hero-icon-bg">
+            <Users class="hero-icon" />
+          </div>
+        </div>
+        <h1 class="hero-title">
+          We Are <span class="text-accent">Studyinfo</span>
+        </h1>
+        <p class="hero-subtitle">
+          The only study abroad platform built specifically for backbenchers, average students, and dreamers who were told they "can't do it."
+        </p>
+      </div>
+    </section>
+
+    <section class="mission-section">
+      <div class="container mission-grid">
+        <div class="mission-content">
+          <h2 class="section-title">Why We Started This</h2>
+          <p class="section-text">
+            Most study abroad consultancies only care about the toppers. They want the student with 9.0 CGPA and 8.0 IELTS because they are "easy" to place.
+          </p>
+          <p class="section-text">
+            But what about the rest of us? The ones who sat in the back? The ones who have a few backlogs? The ones who are smart but not "book smart"?
+          </p>
+          <p class="section-text">
+            Studyinfo was born to help YOU. We believe that a mark sheet does not define your potential. We know that with the right guidance, a backbencher can outperform a topper in the real world.
+          </p>
+        </div>
+        
+        <div class="values-grid">
+          <div class="value-card">
+            <Users class="value-icon" />
+            <h3 class="value-title">For Backbenchers</h3>
+            <p class="value-desc">We speak your language.</p>
+          </div>
+          <div class="value-card">
+            <Target class="value-icon" />
+            <h3 class="value-title">No Judgment</h3>
+            <p class="value-desc">Low GPA? It's okay.</p>
+          </div>
+          <div class="value-card">
+            <BookOpen class="value-icon" />
+            <h3 class="value-title">Real Education</h3>
+            <p class="value-desc">Practical advice only.</p>
+          </div>
+          <div class="value-card">
+            <Globe class="value-icon" />
+            <h3 class="value-title">Global Reach</h3>
+            <p class="value-desc">Study anywhere.</p>
+          </div>
+          <div class="value-card">
+            <Award class="value-icon" />
+            <h3 class="value-title">Proven Success</h3>
+            <p class="value-desc">We've been there.</p>
+          </div>
+          <div class="value-card">
+            <Heart class="value-icon" />
+            <h3 class="value-title">100% Honest</h3>
+            <p class="value-desc">No fake promises.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <div class="container text-center">
+        <h2 class="section-title">Who Are We?</h2>
+        <div class="team-content">
+          <p class="section-text">
+            We are a team of former backbenchers who made it. We are studying and studied in the UK, USA, Canada, Australia, Ireland, Germany, and other European countries. We struggled with IELTS. We faced rejections.
+          </p>
+          <p class="section-text">
+            But today? We are working in top tech giants like Meta, Google, Apple, Amazon, Netflix, Microsoft, and OpenAI. Some of us luckily became professors at universities like Oxford, Stanford, University of Toronto, and TUM Germany. One of us is even in NASA. The <a href="https://ranti.dev/" target="_blank" rel="noopener noreferrer" class="link-secondary">founder</a> himself is working at Airbnb.
+          </p>
+          <p class="section-text">
+            Now, we are sharing everything we learned with you. Free.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .about-page {
+    background-color: #f9fafb;
+  }
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  @media (min-width: 640px) {
+    .container { padding: 0 1.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .container { padding: 0 2rem; }
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .about-hero {
+    background-color: #0f172a;
+    padding: 5rem 0;
+    text-align: center;
+  }
+  .hero-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .hero-icon-bg {
+    background-color: #2563eb;
+    padding: 1rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.5);
+  }
+  .hero-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #ffffff;
+  }
+  .hero-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+  }
+  .text-accent {
+    color: #3b82f6; /* matched blue */
+  }
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    max-width: 42rem;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .mission-section {
+    padding: 4rem 0;
+  }
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .mission-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .section-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+  }
+  .section-text {
+    font-size: 1.125rem;
+    color: #475569;
+    margin-bottom: 1rem;
+    line-height: 1.625;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .value-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  .value-icon {
+    width: 2rem;
+    height: 2rem;
+    color: #64748b;
+    margin: 0 auto 0.75rem;
+  }
+  .value-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+  .value-desc {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+
+  .team-section {
+    background-color: #f8fafc;
+    padding: 4rem 0;
+  }
+  .team-content {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+  .link-secondary {
+    color: #64748b;
+    text-decoration: none;
+  }
+  .link-secondary:hover {
+    text-decoration: underline;
+  }
+</style>

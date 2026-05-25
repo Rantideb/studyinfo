@@ -44,18 +44,14 @@ const {
     <p class="card-excerpt">{excerpt}</p>
 
     <div class="card-footer">
-      <div class="card-author">
-        <div class="author-info">
-          <User class="author-icon" />
-          <span class="author-name">{author}</span>
-        </div>
-        <div class="author-date">
-          <Calendar class="author-icon" />
-          <span>{date}</span>
-        </div>
+      <div class="card-meta-bottom">
+        <span class="author-label">by</span>
+        <span class="author-name">{author}</span>
+        <span class="meta-divider">•</span>
+        <span class="author-date">{date}</span>
       </div>
 
-      <a href={`/blog/${slug}`} class="read-more-btn">
+      <a href={`/blog/${slug}`} class="read-more-btn" aria-label={`Read article: ${title}`}>
         <span>Read article</span>
         <ArrowRight class="read-more-icon" />
       </a>
@@ -65,39 +61,37 @@ const {
 
 <style>
   .blog-card {
-    background-color: #ffffff;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    border: 1px solid #f1f5f9;
+    background-color: var(--card-bg);
+    border-radius: 0px;
+    border: 1px solid var(--image-frame);
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     height: 100%;
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
   .blog-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border-color: #e2e8f0;
+    border-color: var(--jelly-mint);
   }
 
   .image-container {
     aspect-ratio: 16 / 9;
     overflow: hidden;
     position: relative;
+    border-bottom: 1px solid var(--image-frame);
   }
   .card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.4s ease;
   }
   .blog-card:hover .card-image {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 
   .card-content {
-    padding: 1.5rem;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -107,48 +101,44 @@ const {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
   .category-badge {
-    padding: 0.25rem 0.75rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    color: #2563eb;
-    background-color: #eff6ff;
-    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--jelly-mint);
   }
   .read-time {
-    font-size: 0.8rem;
-    color: #64748b;
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--secondary-text);
+    letter-spacing: 0.5px;
   }
 
   .card-title {
-    font-size: 1.25rem;
+    font-family: var(--font-ui);
+    font-size: 1.2rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--hazard-white);
     margin-bottom: 0.75rem;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    line-height: 1.3;
+    transition: color 0.15s ease;
   }
   .card-link {
     text-decoration: none;
     color: inherit;
-    transition: color 0.2s;
   }
-  .blog-card:hover .card-link {
-    color: #2563eb;
+  .blog-card:hover .card-title {
+    color: var(--deep-link-blue);
   }
 
   .card-excerpt {
-    color: #475569;
-    font-size: 0.9375rem;
-    line-height: 1.6;
+    font-family: var(--font-ui);
+    color: var(--secondary-text);
+    font-size: 0.95rem;
+    line-height: 1.5;
     margin-bottom: 1.5rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -158,63 +148,58 @@ const {
   }
 
   .card-footer {
-    padding-top: 1.25rem;
-    border-top: 1px solid #f1f5f9;
+    padding-top: 1rem;
+    border-top: 1px solid var(--image-frame);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
   }
 
-  .card-author {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    min-width: 0; /* allows text truncation if needed */
-  }
-
-  .author-info, .author-date {
+  .card-meta-bottom {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.75rem;
-    color: #64748b;
-    white-space: nowrap;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--secondary-text);
+    letter-spacing: 0.5px;
+  }
+
+  .author-label {
+    opacity: 0.6;
   }
 
   .author-name {
-    font-weight: 500;
-    color: #334155;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120px;
+    color: var(--hazard-white);
+    font-weight: 600;
   }
 
-  .author-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    opacity: 0.7;
+  .meta-divider {
+    color: var(--image-frame);
+    margin: 0 0.1rem;
+  }
+
+  .author-date {
+    opacity: 0.8;
   }
 
   .read-more-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    color: #2563eb;
-    font-weight: 600;
-    font-size: 0.8125rem;
+    color: var(--jelly-mint);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.5px;
     text-decoration: none;
-    transition: all 0.2s;
-    padding: 0.5rem 0.75rem;
-    background-color: #f8fafc;
-    border-radius: 0.5rem;
-    border: 1px solid transparent;
+    transition: color 0.15s ease;
+    flex-shrink: 0;
   }
-
-  .read-more-btn:hover {
-    background-color: #eff6ff;
-    transform: translateX(2px);
-    border-color: #dbeafe;
+  .blog-card:hover .read-more-btn {
+    color: var(--hazard-white);
   }
 
   .read-more-icon {
@@ -222,7 +207,7 @@ const {
     height: 0.9rem;
     transition: transform 0.2s;
   }
-  .read-more-btn:hover .read-more-icon {
-    transform: translateX(2px);
+  .blog-card:hover .read-more-icon {
+    transform: translateX(4px);
   }
 </style>

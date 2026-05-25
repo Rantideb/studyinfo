@@ -12,6 +12,8 @@ const {
   title = "Studyinfo | Study Abroad Guidance for Average Students",
   description = "No judgment, just results. We help backbenchers and average students find the best study abroad scholarships and opportunities."
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, "https://www.studyinfo.net").href;
 ---
 
 <!doctype html>
@@ -25,18 +27,18 @@ const {
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, "https://www.studyinfo.net").href} />
+    <link rel="canonical" href={canonicalURL} />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content="https://www.studyinfo.net/og-image.jpg" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content="https://www.studyinfo.net/og-image.jpg" />
@@ -57,13 +59,31 @@ const {
       }
     </script>
     
+    <!-- Theme Initializer (Blocks layout shift/flash & persists across page transitions) -->
+    <script is:inline>
+      const getThemePreference = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      
+      const theme = getThemePreference();
+      document.documentElement.setAttribute('data-theme', theme);
+
+      document.addEventListener('astro:after-swap', () => {
+        const theme = getThemePreference();
+        document.documentElement.setAttribute('data-theme', theme);
+      });
+    </script>
+
     <!-- View Transitions for SPA-like feel -->
     <ClientRouter />
     
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts for The Verge Design System -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="layout-wrapper">
@@ -78,16 +98,52 @@ const {
 
 <style is:global>
   :root {
-    /* Brand Colors */
-    --brand-primary: #1e40af; /* blue-800 */
-    --brand-secondary: #64748b; /* slate-500 */
-    --brand-accent: #2563eb; /* blue-600 */
-    --brand-dark: #0f172a; /* slate-900 */
+    /* Brand Colors (constant across themes) */
+    --verge-ultraviolet: #5200ff;
+    --console-mint-border: #309875;
+    --deep-link-blue: #3860be;
+    --focus-cyan: #1eaedb;
+    --purple-rule: #3d00bf;
     
-    /* Background & Text */
-    --bg-color: #f8fafc; /* slate-50 */
-    --text-body: #334155; /* slate-700 */
-    --text-heading: #0f172a; /* slate-900 */
+    --absolute-black: #000000;
+    --absolute-white: #ffffff;
+    
+    /* Fonts */
+    --font-display: 'Anton', Impact, Helvetica, sans-serif;
+    --font-ui: 'Space Grotesk', Helvetica, Arial, sans-serif;
+    --font-mono: 'Space Mono', Courier New, Courier, monospace;
+  }
+
+  /* Default Theme (Dark Mode) */
+  :root, html[data-theme="dark"] {
+    --canvas-black: #131313;
+    --surface-slate: #2d2d2d;
+    --image-frame: #313131;
+    --hazard-white: #ffffff;
+    
+    --primary-text: #ffffff;
+    --secondary-text: #949494;
+    --muted-text: #e9e9e9;
+    --inverted-text: #131313;
+
+    --jelly-mint: #3cffd0;
+    --card-bg: #1a1a1a;
+  }
+
+  /* Light Theme */
+  html[data-theme="light"] {
+    --canvas-black: #fafafa;
+    --surface-slate: #f1f1f1;
+    --image-frame: #e5e5e5;
+    --hazard-white: #131313;
+    
+    --primary-text: #131313;
+    --secondary-text: #666666;
+    --muted-text: #333333;
+    --inverted-text: #ffffff;
+
+    --jelly-mint: #008f6b; /* High-contrast editorial emerald mint for light canvas */
+    --card-bg: #ffffff;
   }
 
   *, *::before, *::after {
@@ -100,16 +156,18 @@ const {
     padding: 0;
     width: 100%;
     min-height: 100vh;
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-body);
+    font-family: var(--font-ui);
+    background-color: var(--canvas-black);
+    color: var(--primary-text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: var(--text-heading);
+    color: var(--primary-text);
     margin-top: 0;
+    font-family: var(--font-ui);
   }
 
   .layout-wrapper {
@@ -125,18 +183,51 @@ const {
   /* Prose / Typography Styles */
   .prose {
     line-height: 1.6;
-    color: #475569;
+    color: var(--muted-text);
   }
   .prose h1, .prose h2, .prose h3 {
-    color: #0f172a;
+    color: var(--hazard-white);
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
-  .prose h1 { font-size: 2.25rem; }
-  .prose h2 { font-size: 1.5rem; }
-  .prose p { margin-bottom: 1.25rem; }
+  .prose h2 { font-size: 2.13rem; font-weight: 700; line-height: 1.2; }
+  .prose h3 { font-size: 1.5rem; font-weight: 700; line-height: 1.25; }
+  .prose p { margin-bottom: 1.25rem; font-size: 1rem; font-weight: 500; }
   .prose ul { margin-bottom: 1.25rem; padding-left: 1.5rem; }
   .prose li { margin-bottom: 0.5rem; }
-  .prose a { color: #2563eb; text-decoration: none; }
-  .prose a:hover { text-decoration: underline; }
+  .prose a { color: var(--hazard-white); text-decoration: none; transition: color 0.15s ease; }
+  .prose a:hover { color: var(--deep-link-blue); text-decoration: none; }
+
+  /* Utilities */
+  .btn-primary {
+    display: inline-block;
+    background-color: var(--jelly-mint);
+    color: var(--inverted-text);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 10px 24px;
+    border-radius: 0px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  }
+  .btn-primary:hover {
+    background-color: transparent;
+    border-color: var(--jelly-mint);
+    color: var(--jelly-mint);
+  }
+
+  .card {
+    background-color: var(--canvas-black);
+    border: 1px solid var(--hazard-white);
+    border-radius: 0px;
+    padding: 24px;
+    transition: color 0.15s ease;
+  }
+  .card:hover h2, .card:hover h3, .card:hover a {
+    color: var(--deep-link-blue);
+  }
 </style>

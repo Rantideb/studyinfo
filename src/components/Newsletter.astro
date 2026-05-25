@@ -6,12 +6,10 @@ import { Mail, CheckCircle } from "lucide-astro";
   <div class="newsletter-container">
     <div class="newsletter-card">
       <div class="icon-header">
-        <div class="icon-circle">
-          <Mail class="mail-icon" />
-        </div>
+        <div class="icon-kicker">NEWSLETTER</div>
       </div>
       
-      <h2 class="newsletter-title">Stay Updated with Latest Tips</h2>
+      <h2 class="newsletter-title">STAY UPDATED WITH LATEST TIPS</h2>
       <p class="newsletter-subtitle">
         Get weekly study tips, scholarship alerts, and educational resources delivered to your inbox.
       </p>
@@ -22,23 +20,23 @@ import { Mail, CheckCircle } from "lucide-astro";
             <input
               type="email"
               id="newsletter-email"
-              placeholder="Enter your email address"
+              placeholder="ENTER YOUR EMAIL"
               class="newsletter-input"
               required
             />
             <button type="submit" class="newsletter-button">
-              Subscribe
+              SUBSCRIBE
             </button>
           </div>
           <p class="privacy-note">
-            No spam, unsubscribe at any time.
+            NO SPAM, UNSUBSCRIBE AT ANY TIME.
           </p>
         </form>
       </div>
 
       <div id="newsletter-success" class="newsletter-success" style="display: none;">
         <CheckCircle class="success-icon" />
-        <span class="success-message">Thank you for subscribing!</span>
+        <span class="success-message">THANK YOU FOR SUBSCRIBING!</span>
       </div>
     </div>
   </div>
@@ -66,11 +64,12 @@ import { Mail, CheckCircle } from "lucide-astro";
 
 <style>
   .newsletter-section {
-    background-color: #2563eb; /* blue-600 */
+    background-color: var(--verge-ultraviolet);
     padding: 4rem 0;
+    border-bottom: 1px solid var(--image-frame);
   }
   .newsletter-container {
-    max-width: 56rem; /* max-w-4xl */
+    max-width: 56rem;
     margin: 0 auto;
     padding: 0 1rem;
   }
@@ -82,10 +81,10 @@ import { Mail, CheckCircle } from "lucide-astro";
   }
 
   .newsletter-card {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    background-color: var(--canvas-black);
+    padding: 3rem 2rem;
+    border-radius: 0px;
+    border: 1px solid var(--hazard-white);
     text-align: center;
   }
 
@@ -94,28 +93,28 @@ import { Mail, CheckCircle } from "lucide-astro";
     justify-content: center;
     margin-bottom: 1.5rem;
   }
-  .icon-circle {
-    background-color: #dbeafe; /* blue-100 */
-    padding: 0.75rem;
-    border-radius: 9999px;
-  }
-  .mail-icon {
-    width: 2rem;
-    height: 2rem;
-    color: #2563eb;
+  .icon-kicker {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--jelly-mint);
+    letter-spacing: 1.5px;
   }
 
   .newsletter-title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    line-height: 1.15;
+    letter-spacing: 1.07px;
+    color: var(--hazard-white);
     margin-bottom: 1rem;
   }
   .newsletter-subtitle {
+    font-family: var(--font-ui);
     font-size: 1.125rem;
-    color: #475569;
+    color: var(--muted-text);
     margin-bottom: 2rem;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .newsletter-form {
@@ -136,35 +135,44 @@ import { Mail, CheckCircle } from "lucide-astro";
   .newsletter-input {
     flex: 1;
     padding: 0.75rem 1rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.5rem;
+    background-color: var(--canvas-black);
+    color: var(--hazard-white);
+    border: 1px solid var(--image-frame);
+    border-radius: 2px;
+    font-family: var(--font-ui);
     font-size: 1rem;
     outline: none;
-    transition: ring 0.2s;
+    transition: border-color 0.15s ease;
   }
   .newsletter-input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    border-color: var(--jelly-mint);
   }
 
   .newsletter-button {
-    padding: 0.75rem 1.5rem;
-    background-color: #2563eb;
-    color: #ffffff;
-    font-weight: 500;
-    border: none;
-    border-radius: 0.5rem;
+    padding: 10px 24px;
+    background-color: var(--jelly-mint);
+    color: var(--inverted-text);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    border-radius: 0px;
+    letter-spacing: 1.5px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   }
   .newsletter-button:hover {
-    background-color: #1d4ed8;
+    background-color: transparent;
+    border-color: var(--jelly-mint);
+    color: var(--jelly-mint);
   }
 
   .privacy-note {
-    font-size: 0.875rem;
-    color: #64748b;
-    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: var(--secondary-text);
+    margin-top: 1rem;
   }
 
   .newsletter-success {
@@ -172,14 +180,14 @@ import { Mail, CheckCircle } from "lucide-astro";
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    color: #16a34a; /* green-600 */
+    color: var(--jelly-mint);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
   }
   .success-icon {
     width: 1.5rem;
     height: 1.5rem;
-  }
-  .success-message {
-    font-size: 1.125rem;
-    font-weight: 500;
   }
 </style>

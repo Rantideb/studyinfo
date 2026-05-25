@@ -1,6 +1,6 @@
 ---
 import Logo from "./Logo.astro";
-import { Menu, X } from "lucide-astro";
+import { Menu, X, Sun, Moon } from "lucide-astro";
 
 const pathname = Astro.url.pathname;
 
@@ -26,23 +26,30 @@ const isActive = (path: string) => {
         <Logo />
       </a>
 
-      <nav class="desktop-nav">
-        {
-          navigation.map((item) => (
-            <a
-              href={item.href}
-              class={`nav-link ${isActive(item.href) ? "active" : ""}`}
-            >
-              {item.name}
-            </a>
-          ))
-        }
-      </nav>
+      <div class="nav-right">
+        <nav class="desktop-nav">
+          {
+            navigation.map((item) => (
+              <a
+                href={item.href}
+                class={`nav-link ${isActive(item.href) ? "active" : ""}`}
+              >
+                {item.name}
+              </a>
+            ))
+          }
+        </nav>
 
-      <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle menu">
-        <Menu class="icon icon-menu" />
-        <X class="icon icon-close" style="display: none;" />
-      </button>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+          <Sun class="icon sun-icon" />
+          <Moon class="icon moon-icon" />
+        </button>
+
+        <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle menu">
+          <Menu class="icon icon-menu" />
+          <X class="icon icon-close" style="display: none;" />
+        </button>
+      </div>
     </div>
 
     <div id="mobile-menu" class="mobile-menu" style="display: none;">
@@ -83,6 +90,29 @@ const isActive = (path: string) => {
         }
       }
     });
+
+    const header = document.querySelector('.site-header');
+    function handleScroll() {
+      if (window.scrollY > 30) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
+    }
+    
+    // Deduplicate listener and bind
+    window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // Theme Toggle Handler
+    const themeToggle = document.getElementById("theme-toggle");
+    themeToggle?.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    });
   }
 
   document.addEventListener('astro:page-load', initHeader);
@@ -90,12 +120,20 @@ const isActive = (path: string) => {
 
 <style>
   .site-header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    background-color: var(--canvas-black);
+    border-bottom: 1px solid var(--image-frame);
     position: sticky;
     top: 0;
     z-index: 50;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
+  
+  /* Scrolled State: Merge the two S lines into a single white 'S' */
+  .site-header.scrolled :global(.logo-icon .accent) {
+    color: var(--hazard-white);
+    transform: translateY(4px);
+  }
+
   .header-container {
     max-width: 80rem;
     margin: 0 auto;
@@ -109,33 +147,69 @@ const isActive = (path: string) => {
   }
   .logo-link {
     text-decoration: none;
+    font-family: var(--font-ui);
+    font-size: 2rem;
+    color: var(--hazard-white);
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
   .desktop-nav {
     display: none;
     gap: 2rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .desktop-nav {
       display: flex;
     }
   }
   .nav-link {
     padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #334155;
+    font-weight: 700;
+    color: var(--hazard-white);
     text-decoration: none;
-    transition: all 0.2s ease-in-out;
-    border-bottom: 2px solid transparent;
+    letter-spacing: 1.5px;
+    transition: color 0.15s ease-in-out;
   }
   .nav-link:hover {
-    color: #2563eb;
-    transform: scale(1.05);
+    color: var(--deep-link-blue);
   }
   .nav-link.active {
-    color: #2563eb;
-    border-bottom-color: #2563eb;
+    box-shadow: 0px -1px 0px 0px inset var(--jelly-mint);
   }
+  .theme-toggle-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--hazard-white);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease, background-color 0.15s ease;
+    border-radius: 0px;
+  }
+  .theme-toggle-btn:hover {
+    color: var(--jelly-mint);
+    background-color: var(--surface-slate);
+  }
+  .sun-icon {
+    display: none;
+  }
+  .moon-icon {
+    display: none;
+  }
+  :global(html[data-theme="dark"]) .sun-icon {
+    display: block;
+  }
+  :global(html[data-theme="light"]) .moon-icon {
+    display: block;
+  }
+
   .mobile-toggle {
     display: flex;
     align-items: center;
@@ -144,14 +218,14 @@ const isActive = (path: string) => {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: #334155;
+    color: var(--hazard-white);
     border-radius: 0.375rem;
   }
   .mobile-toggle:hover {
-    background-color: #f1f5f9;
-    color: #2563eb;
+    background-color: var(--surface-slate);
+    color: var(--jelly-mint);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .mobile-toggle {
       display: none;
     }
@@ -162,7 +236,7 @@ const isActive = (path: string) => {
   }
   .mobile-menu {
     padding: 1rem 0;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--image-frame);
   }
   .mobile-nav {
     display: flex;
@@ -171,18 +245,19 @@ const isActive = (path: string) => {
   }
   .mobile-link {
     padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #334155;
+    font-weight: 700;
+    color: var(--hazard-white);
     text-decoration: none;
-    border-radius: 0.375rem;
+    letter-spacing: 1.5px;
   }
   .mobile-link:hover {
-    color: #2563eb;
-    background-color: #f8fafc;
+    color: var(--deep-link-blue);
+    background-color: var(--surface-slate);
   }
   .mobile-link.active {
-    color: #2563eb;
-    background-color: #eff6ff;
+    color: var(--hazard-white);
+    box-shadow: 0px -1px 0px 0px inset var(--jelly-mint);
   }
 </style>

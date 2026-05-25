@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout.astro";
   title="Privacy Policy | Studyinfo"
   description="Read our Privacy Policy to understand how we collect, use, and protect your personal information."
 >
-  <main class="legal-page">
+  <div class="legal-page">
     <div class="container prose">
       <h1>Privacy Policy</h1>
       <p>Last updated: January 2025</p>
@@ -27,17 +27,38 @@ import Layout from "../layouts/Layout.astro";
       <h2>5. Contact Us</h2>
       <p>If you have any questions about this Privacy Policy, please contact us at help@studyinfo.net.</p>
     </div>
-  </main>
+  </div>
 </Layout>
 
 <style>
   .legal-page {
     padding: 4rem 0;
-    background-color: #ffffff;
+    background-color: var(--canvas-black);
+    color: var(--muted-text);
+    font-family: var(--font-ui);
+    line-height: 1.6;
   }
   .container {
     max-width: 56rem;
     margin: 0 auto;
     padding: 0 1rem;
+  }
+  h1 {
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    line-height: 1.15;
+    letter-spacing: 1.07px;
+    color: var(--hazard-white);
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    color: var(--hazard-white);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  p {
+    margin-bottom: 1.5rem;
   }
 </style>

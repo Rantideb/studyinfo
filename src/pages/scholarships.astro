@@ -12,7 +12,7 @@ const scholarshipPosts = allPosts.filter(post => post.data.category === 'Scholar
   title="Scholarships | Studyinfo"
   description="Find scholarships for international students. We focus on opportunities that look beyond just grades."
 >
-  <main class="scholarships-page">
+  <div class="scholarships-page">
     <section class="page-hero">
       <div class="container text-center">
         <div class="hero-icon-wrapper">
@@ -38,12 +38,12 @@ const scholarshipPosts = allPosts.filter(post => post.data.category === 'Scholar
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </Layout>
 
 <style>
   .scholarships-page {
-    background-color: #f8fafc;
+    background-color: var(--canvas-black);
   }
   .container {
     max-width: 80rem;
@@ -62,8 +62,9 @@ const scholarshipPosts = allPosts.filter(post => post.data.category === 'Scholar
   }
 
   .page-hero {
-    background-color: #0f172a;
+    background-color: var(--canvas-black);
     padding: 5rem 0;
+    border-bottom: 1px solid var(--image-frame);
   }
   .hero-icon-wrapper {
     display: flex;
@@ -71,33 +72,35 @@ const scholarshipPosts = allPosts.filter(post => post.data.category === 'Scholar
     margin-bottom: 1.5rem;
   }
   .hero-icon-bg {
-    background-color: #2563eb;
+    background-color: var(--jelly-mint);
     padding: 1rem;
-    border-radius: 9999px;
-    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.5);
+    border-radius: 0px;
   }
   .hero-icon {
     width: 2.5rem;
     height: 2.5rem;
-    color: #ffffff;
+    color: var(--inverted-text);
   }
   .hero-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    letter-spacing: 1.07px;
+    line-height: 1.15;
+    color: var(--hazard-white);
     margin-bottom: 1.5rem;
   }
   @media (min-width: 1024px) {
     .hero-title {
-      font-size: 3rem;
+      font-size: 3.5rem;
     }
   }
   .text-accent {
-    color: #3b82f6;
+    color: var(--jelly-mint);
   }
   .hero-subtitle {
+    font-family: var(--font-ui);
     font-size: 1.25rem;
-    color: #cbd5e1;
+    color: var(--muted-text);
     max-width: 42rem;
     margin: 0 auto;
     line-height: 1.5;

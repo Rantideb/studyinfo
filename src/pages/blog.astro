@@ -12,7 +12,7 @@ const categories = Array.from(new Set(allPosts.map(post => post.data.category)))
   title="Blog | Studyinfo"
   description="Explore our latest articles on study strategies, scholarship opportunities, and student life hacks."
 >
-  <main class="blog-index-page">
+  <div class="blog-index-page">
     <div class="container py-12">
       <div class="header text-center">
         <h1 class="page-title">Study Abroad Guide for Backbenchers</h1>
@@ -57,7 +57,7 @@ const categories = Array.from(new Set(allPosts.map(post => post.data.category)))
         ))}
       </div>
     </div>
-  </main>
+  </div>
 </Layout>
 
 <script>
@@ -129,7 +129,7 @@ const categories = Array.from(new Set(allPosts.map(post => post.data.category)))
 
 <style>
   .blog-index-page {
-    background-color: #f8fafc;
+    background-color: var(--canvas-black);
     min-height: 100vh;
   }
   .container {
@@ -142,23 +142,28 @@ const categories = Array.from(new Set(allPosts.map(post => post.data.category)))
 
   .header { margin-bottom: 3rem; }
   .page-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    letter-spacing: 1.07px;
+    line-height: 1.15;
+    color: var(--hazard-white);
     margin-bottom: 1rem;
   }
   .page-subtitle {
+    font-family: var(--font-ui);
     font-size: 1.25rem;
-    color: #475569;
+    color: var(--muted-text);
     max-width: 42rem;
     margin: 0 auto 1.5rem;
   }
   .back-link {
-    color: #64748b;
+    font-family: var(--font-mono);
+    color: var(--jelly-mint);
     text-decoration: none;
     font-size: 0.875rem;
+    letter-spacing: 1.5px;
   }
-  .back-link:hover { text-decoration: underline; }
+  .back-link:hover { color: var(--hazard-white); }
 
   .filters-bar {
     display: flex;
@@ -193,14 +198,16 @@ const categories = Array.from(new Set(allPosts.map(post => post.data.category)))
   .search-input {
     width: 100%;
     padding: 0.625rem 1rem 0.625rem 2.5rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.5rem;
+    background-color: var(--canvas-black);
+    color: var(--hazard-white);
+    border: 1px solid var(--image-frame);
+    border-radius: 2px;
+    font-family: var(--font-ui);
     outline: none;
     transition: all 0.2s;
   }
   .search-input:focus {
-    border-color: #64748b;
-    box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2);
+    border-color: var(--jelly-mint);
   }
 
   .categories-wrapper {
@@ -233,21 +240,23 @@ const categories = Array.from(new Set(allPosts.map(post => post.data.category)))
   }
   .category-btn {
     padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border: 1px solid #e2e8f0;
-    background-color: #ffffff;
-    color: #334155;
+    border-radius: 0px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid var(--image-frame);
+    background-color: var(--canvas-black);
+    color: var(--hazard-white);
     cursor: pointer;
     white-space: nowrap;
+    letter-spacing: 1.5px;
     transition: all 0.2s;
   }
-  .category-btn:hover { background-color: #f1f5f9; }
+  .category-btn:hover { border-color: var(--jelly-mint); }
   .category-btn.active {
-    background-color: #64748b;
-    color: #ffffff;
-    border-color: #64748b;
+    background-color: var(--jelly-mint);
+    color: var(--inverted-text);
+    border-color: var(--jelly-mint);
   }
 
   .posts-grid {

@@ -1,0 +1,55 @@
+---
+import { Share2 } from "lucide-astro";
+---
+<button class="share-action-btn icon-btn" title="Share link" aria-label="Share this article">
+  <Share2 class="share-icon" />
+</button>
+
+<script>
+  function setupShare() {
+    const buttons = document.querySelectorAll('.share-action-btn');
+    buttons.forEach(btn => {
+      // Clone to remove existing listeners and prevent duplicates on view transition
+      const newBtn = btn.cloneNode(true);
+      btn.parentNode?.replaceChild(newBtn, btn);
+      newBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('Link copied to clipboard!');
+        } catch (err) {
+          console.error('Failed to copy link', err);
+        }
+      });
+    });
+  }
+  
+  // Run on initial load and view transitions
+  setupShare();
+  document.addEventListener('astro:page-load', setupShare);
+</script>
+
+<style>
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+    background: transparent;
+    color: var(--verge-ultraviolet);
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+  }
+  .icon-btn:hover {
+    background-color: #f1f5f9;
+  }
+  .icon-btn:active {
+    transform: scale(0.95);
+  }
+  .share-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+</style>

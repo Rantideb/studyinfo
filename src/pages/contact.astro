@@ -7,7 +7,7 @@ import { Mail, MessageCircle } from "lucide-astro";
   title="Contact Us | Studyinfo"
   description="Get in touch with Study & Scholarship Blog Resources. We are here to help you with your study abroad journey."
 >
-  <main class="contact-page">
+  <div class="contact-page">
     <div class="container contact-grid">
       <div class="contact-info reveal-on-scroll">
         <h1 class="page-title">
@@ -92,7 +92,7 @@ import { Mail, MessageCircle } from "lucide-astro";
         </form>
       </div>
     </div>
-  </main>
+  </div>
 </Layout>
 
 <script>
@@ -122,7 +122,7 @@ import { Mail, MessageCircle } from "lucide-astro";
 <style>
   .contact-page {
     padding: 4rem 0;
-    background-color: #ffffff;
+    background-color: var(--canvas-black);
   }
   .container {
     max-width: 80rem;
@@ -148,18 +148,20 @@ import { Mail, MessageCircle } from "lucide-astro";
   }
 
   .page-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    letter-spacing: 1.07px;
+    line-height: 1.15;
+    color: var(--hazard-white);
     margin-bottom: 1.5rem;
-    line-height: 1.2;
   }
   .text-accent {
-    color: #3b82f6; /* matched blue */
+    color: var(--jelly-mint);
   }
   .page-subtitle {
+    font-family: var(--font-ui);
     font-size: 1.25rem;
-    color: #475569;
+    color: var(--muted-text);
     margin-bottom: 2rem;
     line-height: 1.5;
   }
@@ -175,34 +177,41 @@ import { Mail, MessageCircle } from "lucide-astro";
     gap: 1rem;
   }
   .info-icon-bg {
-    background-color: #eff6ff;
+    background-color: var(--verge-ultraviolet);
+    border: 1px solid var(--image-frame);
     padding: 0.75rem;
-    border-radius: 0.5rem;
+    border-radius: 0px;
   }
   .info-icon {
     width: 1.5rem;
     height: 1.5rem;
-    color: #64748b;
+    color: var(--absolute-white);
   }
   .info-heading {
-    font-weight: 600;
-    color: #0f172a;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--hazard-white);
     margin-bottom: 0.25rem;
   }
   .info-text {
-    color: #475569;
+    font-family: var(--font-ui);
+    color: var(--secondary-text);
   }
   .info-subtext {
-    font-size: 0.875rem;
-    color: #64748b;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-text);
+    letter-spacing: 1.5px;
     margin-top: 0.25rem;
   }
 
   .contact-form-wrapper {
-    background-color: #f8fafc;
+    background-color: var(--canvas-black);
     padding: 2rem;
-    border-radius: 1rem;
-    border: 1px solid #f1f5f9;
+    border-radius: 0px;
+    border: 1px solid var(--image-frame);
   }
 
   .contact-form {
@@ -212,38 +221,45 @@ import { Mail, MessageCircle } from "lucide-astro";
   }
   .field-label {
     display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #334155;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--hazard-white);
     margin-bottom: 0.25rem;
   }
   .field-input, .field-select, .field-textarea {
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.5rem;
-    background-color: #ffffff;
+    border: 1px solid var(--image-frame);
+    border-radius: 2px;
+    background-color: var(--canvas-black);
+    color: var(--hazard-white);
+    font-family: var(--font-ui);
     font-size: 1rem;
     outline: none;
     transition: all 0.2s;
   }
   .field-input:focus, .field-select:focus, .field-textarea:focus {
-    border-color: #64748b;
-    box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2);
+    border-color: var(--jelly-mint);
   }
   .submit-btn {
     width: 100%;
-    background-color: #64748b;
-    color: #ffffff;
-    font-weight: 600;
+    background-color: var(--jelly-mint);
+    color: var(--inverted-text);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 1.5px;
     padding: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 0px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   }
   .submit-btn:hover {
-    background-color: #1d4ed8;
+    background-color: transparent;
+    border-color: var(--jelly-mint);
+    color: var(--jelly-mint);
   }
 
   /* Reveal animation */

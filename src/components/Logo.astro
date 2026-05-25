@@ -10,50 +10,60 @@ const { className = "", textClassName = "" } = Astro.props;
 <div class="logo-container">
   <svg
     class={`logo-icon ${className}`}
-    viewBox="0 0 24 24"
+    viewBox="6 2 16 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path
-      d="M4 12C4 12 5.5 8 10 8C14.5 8 14.5 16 19 16C23.5 16 22 10 22 10"
-      stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="accent"
-    />
-    <path
-      d="M4 16C4 16 5.5 12 10 12C14.5 12 14.5 20 19 20C23.5 20 22 14 22 14"
-      stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="secondary"
-    />
+    <g transform="matrix(0 1 1 0 0 0)">
+      <path
+        d="M4 12C4 12 5.5 8 10 8C14.5 8 14.5 16 19 16C23.5 16 22 10 22 10"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="accent"
+      />
+      <path
+        d="M4 16C4 16 5.5 12 10 12C14.5 12 14.5 20 19 20C23.5 20 22 14 22 14"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="secondary"
+      />
+    </g>
   </svg>
-  <span class={`logo-text ${textClassName}`}>Studyinfo</span>
+  <span class={`logo-text ${textClassName}`}>tudy Info</span>
 </div>
 
 <style>
   .logo-container {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    align-items: flex-end;
+    gap: 0;
+    line-height: 1;
+    white-space: nowrap;
   }
   .logo-icon {
-    height: 2rem;
-    width: 2rem;
+    height: 1.5rem;
+    width: 1.1rem;
+    display: block;
+    margin-bottom: 0.1rem; /* align baseline with text */
+    margin-right: -0.22rem; /* Kern the S and t to sit together naturally */
   }
   .accent {
-    color: var(--brand-accent, #2563eb);
+    color: var(--jelly-mint);
+    transition: color 0.3s ease, transform 0.3s ease;
   }
   .secondary {
-    color: var(--brand-secondary, #64748b);
-    opacity: 0.5;
+    color: var(--hazard-white);
   }
   .logo-text {
-    font-size: 1.25rem;
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-heading, #0f172a);
+    color: var(--hazard-white);
+    letter-spacing: -0.5px;
+    line-height: 1;
   }
 </style>

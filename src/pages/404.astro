@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout.astro";
   title="404 - Page Not Found"
   description="We can't seem to find the page you are looking for!"
 >
-  <main class="not-found-page">
+  <div class="not-found-page">
     <div class="not-found-content">
       <div class="svg-wrapper">
         <svg
@@ -71,7 +71,7 @@ import Layout from "../layouts/Layout.astro";
         </svg>
       </div>
 
-      <h1 class="not-found-title">OPPS! Page Not Found</h1>
+      <h1 class="not-found-title">OOPS! Page Not Found</h1>
       <p class="not-found-text">
         We can't seem to find the page you are looking for!
       </p>
@@ -81,7 +81,7 @@ import Layout from "../layouts/Layout.astro";
         <p>© {new Date().getFullYear()} - Studyinfo</p>
       </div>
     </div>
-  </main>
+  </div>
 </Layout>
 
 <style>
@@ -91,7 +91,7 @@ import Layout from "../layouts/Layout.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #000000;
+    background-color: var(--canvas-black);
     overflow: hidden;
     padding: 2.5rem 0;
   }
@@ -112,40 +112,52 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .not-found-title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    letter-spacing: 1.07px;
+    line-height: 1.15;
+    color: var(--hazard-white);
     margin-bottom: 1rem;
   }
   @media (min-width: 640px) {
-    .not-found-title { font-size: 2.25rem; }
+    .not-found-title { font-size: 3.5rem; }
   }
   .not-found-text {
+    font-family: var(--font-ui);
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--muted-text);
     margin-bottom: 2rem;
   }
   @media (min-width: 640px) {
-    .not-found-text { font-size: 1.125rem; }
+    .not-found-text { font-size: 1.25rem; }
   }
 
   .home-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    font-weight: 500;
+    background-color: var(--jelly-mint);
+    color: var(--inverted-text);
+    padding: 10px 24px;
+    border-radius: 0px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 1.5px;
     text-decoration: none;
-    transition: background-color 0.2s;
+    border: 1px solid transparent;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   }
-  .home-btn:hover { background-color: #e2e8f0; }
+  .home-btn:hover {
+    background-color: transparent;
+    border-color: var(--jelly-mint);
+    color: var(--jelly-mint);
+  }
 
   .not-found-footer {
     margin-top: 4rem;
-    color: #4b5563;
-    font-size: 0.875rem;
+    color: var(--secondary-text);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
   }
 </style>

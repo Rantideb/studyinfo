@@ -50,7 +50,8 @@ const faqSchema = {
 <style>
   .faq-section {
     padding: 5rem 0;
-    background-color: #f8fafc;
+    background-color: var(--canvas-black);
+    border-bottom: 1px solid var(--image-frame);
   }
   .container {
     max-width: 64rem;
@@ -60,14 +61,17 @@ const faqSchema = {
   .text-center { text-align: center; }
   .header { margin-bottom: 3rem; }
   .title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-family: var(--font-ui);
+    font-size: 2.5rem;
+    letter-spacing: 1.07px;
+    line-height: 1.15;
+    color: var(--hazard-white);
     margin-bottom: 1rem;
   }
   .subtitle {
+    font-family: var(--font-ui);
     font-size: 1.125rem;
-    color: #64748b;
+    color: var(--muted-text);
   }
   .faq-grid {
     display: grid;
@@ -80,23 +84,26 @@ const faqSchema = {
     }
   }
   .faq-item {
-    background: #ffffff;
+    background-color: var(--canvas-black);
     padding: 2rem;
-    border-radius: 1rem;
-    border: 1px solid #e2e8f0;
-    transition: transform 0.2s;
+    border-radius: 0px;
+    border: 1px solid var(--image-frame);
+    transition: transform 0.2s, border-color 0.2s;
   }
   .faq-item:hover {
     transform: translateY(-5px);
+    border-color: var(--jelly-mint);
   }
   .faq-question {
+    font-family: var(--font-ui);
     font-size: 1.125rem;
-    font-weight: 600;
-    color: #0f172a;
+    font-weight: 700;
+    color: var(--hazard-white);
     margin-bottom: 1rem;
   }
   .faq-answer {
-    color: #475569;
+    font-family: var(--font-ui);
+    color: var(--muted-text);
     line-height: 1.6;
   }
 </style>

@@ -62,8 +62,9 @@ import { BookOpen, Facebook, Twitter, Instagram, Mail } from "lucide-astro";
 
 <style>
   .site-footer {
-    background-color: #0f172a; /* slate-900 */
-    color: #ffffff;
+    background-color: var(--canvas-black);
+    color: var(--hazard-white);
+    border-top: 1px solid var(--image-frame);
   }
   .footer-container {
     max-width: 80rem;
@@ -82,13 +83,14 @@ import { BookOpen, Facebook, Twitter, Instagram, Mail } from "lucide-astro";
   }
   .brand-logo {
     margin-bottom: 1rem;
+    font-family: var(--font-ui);
+    font-size: 2rem;
   }
-  /* Since Logo is a component, we use global or just pass it in */
   :global(.logo-text-white) {
-    color: #ffffff !important;
+    color: var(--hazard-white) !important;
   }
   .brand-description {
-    color: #cbd5e1; /* slate-300 */
+    color: var(--secondary-text);
     margin-bottom: 1rem;
     max-width: 28rem;
     line-height: 1.5;
@@ -98,21 +100,23 @@ import { BookOpen, Facebook, Twitter, Instagram, Mail } from "lucide-astro";
     gap: 1rem;
   }
   .social-link {
-    color: #94a3b8; /* slate-400 */
-    transition: color 0.2s;
+    color: var(--secondary-text);
+    transition: color 0.15s ease;
   }
   .social-link:hover {
-    color: #3b82f6; /* brand-accent */
+    color: var(--jelly-mint);
   }
   .icon {
     width: 1.25rem;
     height: 1.25rem;
   }
   .links-title {
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
     margin-bottom: 1rem;
-    color: #ffffff;
+    color: var(--hazard-white);
+    letter-spacing: 1.5px;
   }
   .links-list {
     list-style: none;
@@ -123,20 +127,23 @@ import { BookOpen, Facebook, Twitter, Instagram, Mail } from "lucide-astro";
     gap: 0.5rem;
   }
   .link-item {
-    color: #cbd5e1;
+    color: var(--muted-text);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.15s ease;
   }
   .link-item:hover {
-    color: #3b82f6;
+    color: var(--deep-link-blue);
   }
   .footer-bottom {
-    border-top: 1px solid #334155; /* slate-700 */
+    border-top: 1px solid var(--image-frame);
     margin-top: 2rem;
     padding-top: 2rem;
     text-align: center;
   }
   .copyright {
-    color: #94a3b8;
+    color: var(--secondary-text);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
   }
 </style>
